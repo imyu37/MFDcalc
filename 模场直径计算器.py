@@ -9,17 +9,17 @@ def calculate_mfd():
     # 布局设计
     layout = [
         [
-            sg.Text("波长(nm):", font=("Microsoft YaHei",)),
+            sg.Text("波长 (nm):", font=("Microsoft YaHei",)),
             sg.InputText(
                 key="wavelength", size=(10, 1), font=("Arial",), default_text="488"
             ),
         ],
         [
-            sg.Text("数值孔径(NA):", font=("Microsoft YaHei",)),
+            sg.Text("数值孔径 (NA):", font=("Microsoft YaHei",)),
             sg.InputText(key="na", size=(10, 1), font=("Arial",), default_text="0.06"),
         ],
         [
-            sg.Text("纤芯直径(μm):", font=("Microsoft YaHei",)),
+            sg.Text("纤芯直径 (μm):", font=("Microsoft YaHei",)),
             sg.InputText(
                 key="core_diameter", size=(10, 1), font=("Arial",), default_text="4.0"
             ),
