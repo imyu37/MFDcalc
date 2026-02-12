@@ -1,5 +1,6 @@
-import FreeSimpleGUI as sg
 import math
+
+import FreeSimpleGUI as sg
 
 
 def calculate_mfd():
@@ -9,20 +10,22 @@ def calculate_mfd():
     # 布局设计
     layout = [
         [
-            sg.Text("波长 (nm):", font=("Microsoft YaHei",)),
+            sg.Text("纤芯半径", font=("Microsoft YaHei",)),
             sg.InputText(
-                key="wavelength", size=(10, 1), font=("Arial",), default_text="488"
+                key="core_radius", size=(10, 1), font=("Arial",), default_text="2"
             ),
+            sg.Text("μm", font=("Microsoft YaHei",)),
         ],
         [
-            sg.Text("数值孔径 (NA):", font=("Microsoft YaHei",)),
+            sg.Text("数值孔径", font=("Microsoft YaHei",)),
             sg.InputText(key="na", size=(10, 1), font=("Arial",), default_text="0.06"),
         ],
         [
-            sg.Text("纤芯直径 (μm):", font=("Microsoft YaHei",)),
+            sg.Text("      波长", font=("Microsoft YaHei",)),
             sg.InputText(
-                key="core_diameter", size=(10, 1), font=("Arial",), default_text="4.0"
+                key="wavelength", size=(10, 1), font=("Arial",), default_text="488"
             ),
+            sg.Text("nm", font=("Microsoft YaHei",)),
         ],
         [sg.HorizontalSeparator()],
         [
@@ -31,8 +34,12 @@ def calculate_mfd():
             sg.Button("退出", key="exit", font=("Microsoft YaHei",)),
         ],
         [
-            sg.Text("计算结果:", font=("Microsoft YaHei", 12)),
+            sg.Text("模场直径MFD:", font=("Microsoft YaHei", 12)),
             sg.Text("", key="result", size=(20, 1), font=("Arial", 12)),
+        ],
+        [
+            sg.Text("归一化频率 V:", font=("Microsoft YaHei", 12)),
+            sg.Text("", key="V_value", size=(20, 1), font=("Arial", 12)),
         ],
     ]
 
@@ -49,19 +56,20 @@ def calculate_mfd():
         if event == "clear":
             window["wavelength"].update("")
             window["na"].update("")
-            window["core_diameter"].update("")
+            window["core_radius"].update("")
             window["result"].update("")
+            window["V_value"].update("")
 
         if event == "calculate":
             try:
                 # 获取输入值
                 wavelength = float(values["wavelength"])
                 na = float(values["na"])
-                core_diameter = float(values["core_diameter"])
+                core_radius = float(values["core_radius"])
 
                 # 转换为米
                 wavelength_m = wavelength * 1e-9
-                core_radius_m = (core_diameter / 2) * 1e-6
+                core_radius_m = core_radius * 1e-6
 
                 # 计算V数
                 V = (2 * math.pi * core_radius_m * na) / wavelength_m
@@ -74,6 +82,7 @@ def calculate_mfd():
 
                 # 显示结果
                 window["result"].update(f"{mfd_um:.2f} μm")
+                window["V_value"].update(f"{V:.2f}")
 
             except ValueError:
                 sg.popup_error("请输入有效的数值!")
