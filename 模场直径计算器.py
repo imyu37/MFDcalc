@@ -38,7 +38,7 @@ def calculate_mfd():
             sg.Text("", key="result", size=(20, 1), font=("Arial", 12)),
         ],
         [
-            sg.Text("归一化频率 V:", font=("Microsoft YaHei", 12)),
+            sg.Text("归一化频率  V:", font=("Microsoft YaHei", 12)),
             sg.Text("", key="V_value", size=(20, 1), font=("Arial", 12)),
         ],
     ]
@@ -80,9 +80,15 @@ def calculate_mfd():
                 # 转换为微米
                 mfd_um = mfd * 1e6
 
+                # 验证单模条件
+                if V <= 2.405:
+                    mode_info = "单模光纤"
+                else:
+                    mode_info = "多模光纤"
+
                 # 显示结果
                 window["result"].update(f"{mfd_um:.2f} μm")
-                window["V_value"].update(f"{V:.2f}")
+                window["V_value"].update(f"{V:.2f} ({mode_info})")
 
             except ValueError:
                 sg.popup_error("请输入有效的数值!")
