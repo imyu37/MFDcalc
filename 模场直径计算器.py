@@ -39,7 +39,7 @@ def calculate_mfd():
         ],
         [
             sg.Text("归一化频率  V:", font=("Microsoft YaHei", 12)),
-            sg.Text("", key="V_value", size=(20, 1), font=("Arial", 12)),
+            sg.Text("", key="V_value", size=(20, 1), font=("Microsoft YaHei", 12)),
         ],
     ]
 
